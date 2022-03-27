@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #links{
+            display: flex;
+            justify-content: space-around;
+            text-decoration: none;
+            box-shadow: 2px 2px 5px 5px rgb(235, 235, 235);
+            height: 50px;
+            align-items: center;
+        }
+        a{
+            text-decoration: none;
+            color: teal;
+            font-size: large;
+        }
+        table,
+        td,
+        th {
+        border: 1px solid #ddd;
+        text-align: left;
+        }
+
+        table {
+        border-collapse: collapse;
+        width: 75%;
+        margin: auto;
+        margin-top: 50px;
+        }
+
+        th,
+        td {
+        padding: 15px;
+        }
+
+        tr > th {
+        background-color: teal;
+        color: white;
+        }
+        #new{
+            display: flex;
+            height: 30px;
+            flex-direction:row-reverse;
+        }
+    </style>
+</head>
+<body>
+    <div id="links">
+        <div><a href="G:\HTML\job\index.html">Home</a></div>
+        <div><a href="G:\HTML\job\appliedjob.html">Applied jobs</a></div>
+        <div><a href="G:\HTML\job\bookmark.html">Bookmark</a></div>
+    </div>
+    <div id="new">
+        <select id="sortNames" onchange="handleNameSort()">
+            <option value="">Sort By Names</option>
+            <option value="a">Ascending</option>
+            <option value="d">Descending</option>
+          </select>
+      
+          <select id="sortSalary" onchange="handleSalarySort()">
+            <option value="">Sort By Salary</option>
+            <option value="htl">High to Low</option>
+            <option value="lth">Low to High</option>
+          </select>
+      
+          <select id="filterRole" onchange="myf()">
+            <option value="">Filter by Role</option>
+            <option value="FSD">FSD</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+          </select>
+    </div>
+    <div id="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Education</th>
+                    <th>Job applied</th>
+                    <th>Salary</th>
+                    <th>Bookmark</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    var applied = JSON.parse(localStorage.getItem("entered"));
+    // window.addEventListener("load", function () {
+    //   view(applied);
+    // });
+    // we can write above instead of view applied written just below;
+    view(applied);
+    function view(applied){
+        document.querySelector("tbody").innerHTML="";
+        applied.map(function (el){
+            var row = document.createElement("tr");
+            var td1 = document.createElement("td");
+            td1.innerText = el.name;
+            var td2 = document.createElement("td");
+            td2.innerText= el.email;
+            var td3 = document.createElement("td");
+            td3.innerText= el.education;
+            var td4 = document.createElement("td");
+            td4.innerText= el.job;
+            var td5 = document.createElement("td");
+            td5.innerText=el.salary;
+            var td6 = document.createElement("td");
+            td6.innerText="Bookmark";
+            td6.style.color="teal";
+            td6.style.cursor="pointer";
+            td6.addEventListener("click",function(){
+                addbok(el);
+            });
+            row.append(td1,td2,td3,td4,td5,td6);
+            document.querySelector("tbody").append(row);
+        })
+    }
+    var bookmarklist = JSON.parse(localStorage.getItem("book")) || [];
+    function addbok(el){
+        var name1 = el.name;
+        var email1 = el.email;
+        var edu1 = el.education;
+        var job1 = el.job;
+        var salary1= el.salary;
+        var obj = {n:name1,e:email1,e:edu1,j:job1,s:salary1}
+        bookmarklist.push(obj);
+        localStorage.setItem("book",JSON.stringify(bookmarklist));
+
+    }
+    // mysort
+    // document.querySelector("#sortNames").addEventListener("click",mysname)
+    function handleNameSort(){
+        
+        var v = document.querySelector("#sortNames").value;
+        if(v=="a"){
+            applied.sort(function(a,b){
+                if(a.name>b.name) return 1;
+                else if(a.name<b.name) return -1;
+                else return 0;
+            })
+
+        }
+        else if(v=="d"){
+            applied.sort(function(a,b){
+                if(a.name>b.name) return -1;
+                else if(a.name<b.name) return 1;
+                return 0;
+            })
+        
+        }
+        view(applied);
+    }
+    // document.querySelector("#sortSalary").addEventListener("click",myssalary);
+    function handleSalarySort() {
+        var v = document.querySelector("#sortSalary").value;
+        if(v=="htl"){
+            applied.sort(function(a,b){
+                return b.salary -a.salary;
+            })
+            
+            
+        }
+        else if(v=="lth"){
+            applied.sort(function(a,b){
+                return a.salary - b.salary;
+            })
+        }
+        view(applied);
+        console.log(applied);
+    }
+    // myfilter
+    // document.querySelector("#filterRole").addEventListener("onchange",myf)
+    function myf(){
+        var v = document.querySelector("#filterRole").value;
+        var filtered= applied.filter(function(el){
+            return el.job==v;
+        })
+        if(filtered=="") view(applied);
+        else view(filtered);
+        console.log(filtered);
+    }
+
+</script>

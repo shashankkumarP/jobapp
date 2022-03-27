@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #links{
+            display: flex;
+            justify-content: space-around;
+            text-decoration: none;
+            box-shadow: 2px 2px 5px 5px rgb(235, 235, 235);
+            height: 50px;
+            align-items: center;
+        }
+        a{
+            text-decoration: none;
+            color: teal;
+            font-size: large;
+        }
+        table,
+        td,
+        th {
+        border: 1px solid #ddd;
+        text-align: left;
+        }
+
+        table {
+        border-collapse: collapse;
+        width: 75%;
+        margin: auto;
+        margin-top: 50px;
+        }
+
+        th,
+        td {
+        padding: 15px;
+        }
+
+        tr > th {
+        background-color: teal;
+        color: white;
+        }
+        #new{
+            display: flex;
+            height: 30px;
+            flex-direction:row-reverse;
+        }
+    </style>
+</head>
+<body>
+    <div id="links">
+        <div><a href="G:\HTML\job\index.html">Home</a></div>
+        <div><a href="G:\HTML\job\appliedjob.html">Applied jobs</a></div>
+        <div><a href="G:\HTML\job\bookmark.html">Bookmark</a></div>
+    </div>
+    <div id="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Education</th>
+                    <th>Job applied</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    var list = JSON.parse(localStorage.getItem("book"));
+    list.map(function(el,i){
+        var row = document.createElement("tr");
+        var td1 = document.createElement("td");
+        td1.innerText = el.n;
+        var td2 = document.createElement("td");
+        td2.innerText= el.e;
+        var td3 = document.createElement("td");
+        td3.innerText= el.e;
+        var td4 = document.createElement("td");
+        td4.innerText= el.j;
+        var td5 = document.createElement("td");
+        td5.innerText=el.s;
+        row.append(td1,td2,td3,td4,td5);
+        document.querySelector("tbody").append(row);
+
+    })
+</script>

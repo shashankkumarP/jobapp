@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body>div:nth-child(2){
+            
+            height: 300px;
+            width: 30%;
+            margin: auto;
+            margin-top: 30px;
+            display: block;
+            
+        }
+        body{
+            background-color: white;
+        }
+        #links{
+            display: flex;
+            justify-content: space-evenly;
+            text-decoration: none;
+            box-shadow: 2px 2px 5px 5px rgb(235, 235, 235);
+            height: 50px;
+            align-items: center;
+        }
+        /* #links > div {
+            display: flex;
+            list-style: none;
+        } */
+        a{
+            text-decoration: none;
+            color: teal;
+            font-size: large;
+        }
+        input,
+        select {
+            display: block;
+            margin: 15px 0px;
+            font-size: 20px;
+            padding: 2%;
+        }
+        option {
+            font-size: 25px;
+        }
+        form {
+            width: 400px;
+            border: 1px solid rgb(230, 230, 230);
+            margin: 3% auto;
+            padding: 3%;
+            background: white;
+            padding-left: 40px;
+        }
+        #submit{
+            border-radius: 10px;
+            height: 50px;
+            width: 121px;
+        }
+    </style>
+</head>
+<body>
+    <div id="links">
+        <div><a href="G:\HTML\job\index.html">Home</a></div>
+        <div><a href="G:\HTML\job\appliedjob.html">Applied jobs</a></div>
+        <div><a href="G:\HTML\job\bookmark.html">Bookmark</a></div>
+    </div>
+    <div>
+        
+        <form action="">
+            <h2>Enter Your Application</h2>
+            <input id="name" type="text" placeholder="enter your name"/>
+            <input id="email" type="email" placeholder="enter your email" />
+            <select name="" id="edu">
+                <option value="">level of education</option>
+                <option value="UG">UG</option>
+                <option value="PG">PG</option>
+                <option value="secondry">secondry</option>
+            </select>
+            <select name="" id="role" >
+                <option value="">Type of job</option>
+                <option value="FSD">FSD</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Backend">Backend</option>
+            </select>
+            <input id="salary" type="number" placeholder="salary expected in LPA"/>
+            <input type="submit" id="submit" value="submit">
+
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    document.querySelector("form").addEventListener("submit",myform);
+    var indexcollection = JSON.parse(localStorage.getItem("entered")) || [];
+    function myform(){
+        event.preventDefault();
+        var name1 = document.querySelector("#name").value;
+        var email1 = document.querySelector("#email").value;
+        var education1 = document.querySelector("#edu").value;
+        var job1 = document.querySelector("#role").value;
+        var salary1 = document.querySelector("#salary").value;
+        var obj = {
+            name:name1,email:email1,education:education1,job:job1,salary:salary1
+        }
+        indexcollection.push(obj);
+        localStorage.setItem("entered",JSON.stringify(indexcollection));
+        document.querySelector("#name").value ="";
+        document.querySelector("#email").value="";
+        document.querySelector("#salary").value="";
+    }
+</script>
